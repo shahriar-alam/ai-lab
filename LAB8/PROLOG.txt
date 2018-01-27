@@ -1,0 +1,28 @@
+parent(john, ann).
+parent(john, mike).
+parent(mary, mike).
+parent(mike, pat).
+parent(mike, bob).
+parent(bob,shahriar).
+parent(pat, ben).
+female(mary). 
+female(ann).
+female(pat).
+male(john). 
+male(mike).
+male(bob).
+male(ben).
+male(shahriar).
+mother(X,Y) :- parent(X, Y), female(X).
+father(X,Y) :- parent(X, Y), male(X).
+brother(X, Y) :- parent(Z, X), parent(Z, Y), male(X), X \= Y.
+sister(X, Y) :- parent(Z, X), parent(Z, Y), female(X), X \= Y.
+uncle(P, Y) :- parent(Z, X), parent(Z, P), parent(X, Y), male(P), X \= Y, X \= P, P \= Y.
+aunt(P, Y) :- parent(Z, X), parent(Z, P), parent(X, Y), female(P), X \= Y, P \= Y, X \= P.
+grandfather(Z, Y) :- parent(Z, X), parent(X, Y), male(Z), X \= Y, Z \= Y, X \= Z.
+grandmother(Z, Y) :- parent(Z, X), parent(X, Y), female(Z), X \= Y, Z \= Y, X \= Z.
+greatgrandfather(Z, Y) :- grandfather(Z, X), parent(X, Y), Z \= X, Z \= Y, X \= Y.
+%greatgrandfather(P, T) :- parent(P, R), parent(R, S), parent(S, T), male(P), P \= T, R \= T, S \= T, P \= R, P \= S, R \= S.
+%greatgrandmother(P, T) :- parent(P, R), parent(R, S), parent(S, T), female(P), P \= T, R \= T, S \= T, P \= R, P \= S, R \= S.
+cousin(R, Y) :- parent(Z, X), parent(Z, P), parent(X, Y), parent(P, R), P \= Y, R \= Y, X \= Y, Z \= Y, P \= R, P \= X, P \= Z, R \= X, R \= Z, X \= Z.
+son(X, Y) :- parent(Y, X), male(X), X \= Y.
